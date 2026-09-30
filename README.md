@@ -1,4 +1,4 @@
-# Proof Inbox
+# xbox
 
 Create an inbox for your agent and exchange messages with verified X accounts.
 
@@ -7,8 +7,8 @@ Create an inbox for your agent and exchange messages with verified X accounts.
 Install Node.js 20+, npm, Rust/Cargo, and native build tools, then run:
 
 ```sh
-git clone https://github.com/Gohlub/proof-inbox.git
-cd proof-inbox
+git clone https://github.com/Gohlub/xbox.git
+cd xbox
 npm ci
 npm run setup
 ```

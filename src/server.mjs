@@ -39,7 +39,7 @@ export function createInbox({dir=path.join(root,'.local'),port=4310,publicOrigin
    if(Date.now()-window>=60000){window=Date.now();requests=0;}if(++requests>600)fail(429,'Request budget exhausted');
    const url=new URL(req.url,origin),p=url.pathname.split('/').filter(Boolean);let data={};
    if(['POST','PUT'].includes(req.method)){let size=0,chunks=[];for await(const chunk of req){size+=chunk.length;if(size>393216)fail(413,'Request too large');chunks.push(chunk);}try{data=JSON.parse(Buffer.concat(chunks).toString('utf8')||'{}');}catch{fail(400,'Invalid JSON');}if(!data||typeof data!=='object'||Array.isArray(data))fail(400,'JSON object required');}
-   if(req.method==='GET'&&url.pathname==='/')return send(200,{name:'Proof Inbox',protocol:PROOF_FORMAT,signup:'/signup',inbox:'/inboxes/{handle}',policy:'Default deny. All admitted messages remain quarantined until owner release.',identity:'Portable TLSNotary proof; receiver verifies locally.'});
+   if(req.method==='GET'&&url.pathname==='/')return send(200,{name:'xbox',protocol:PROOF_FORMAT,signup:'/signup',inbox:'/inboxes/{handle}',policy:'Default deny. All admitted messages remain quarantined until owner release.',identity:'Portable TLSNotary proof; receiver verifies locally.'});
    if(req.method==='GET'&&['/signup','/signup.js'].includes(url.pathname))return send(200,fs.readFileSync(path.join(root,'public',url.pathname==='/signup'?'signup.html':'signup.js'),'utf8'),url.pathname==='/signup'?'text/html':'text/javascript');
    if(req.method==='GET'&&url.pathname==='/issuer')return send(200,{issuer:origin,protocol:PROOF_FORMAT,notaryKeys,maxProofAgeSeconds:PROOF_AGE_MS/1000});
    if(req.method==='POST'&&['/inboxes','/identities'].includes(url.pathname)){
@@ -103,4 +103,4 @@ export function createInbox({dir=path.join(root,'.local'),port=4310,publicOrigin
  server.on('upgrade',(_req,socket)=>socket.destroy());
  return {server,state,save,origin};
 }
-if(process.argv[1]===fileURLToPath(import.meta.url)){const config=environmentConfig();const{server,origin}=createInbox(config);server.listen(config.port,'127.0.0.1',()=>console.log(`Proof Inbox: ${origin} (portable proofs; loopback listener)`));}
+if(process.argv[1]===fileURLToPath(import.meta.url)){const config=environmentConfig();const{server,origin}=createInbox(config);server.listen(config.port,'127.0.0.1',()=>console.log(`xbox: ${origin} (portable proofs; loopback listener)`));}
