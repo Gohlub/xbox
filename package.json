@@ -1,0 +1,25 @@
+{
+  "name": "proof-inbox",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "cli": "node src/cli.mjs",
+    "setup": "node scripts/setup-native.mjs",
+    "funnel:gateway": "node scripts/start-funnel-gateway.mjs",
+    "funnel:configure": "node scripts/funnel-config.mjs",
+    "funnel:service": "node scripts/funnel-service.mjs",
+    "test:native": "node scripts/test-native.mjs",
+    "notary:init": "node scripts/notary.mjs init",
+    "notary:start": "node scripts/notary.mjs start",
+    "test:x": "node --test test/native-portable.integration.mjs",
+    "test:identity": "node scripts/test-identity.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "playwright": "1.63.0"
+  }
+}

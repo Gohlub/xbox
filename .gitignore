@@ -1,0 +1,10 @@
+vendor/
+.local/
+node_modules/
+*.log
+
+.env
+.env.*
+!.env.example
+
+native/target/

@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {spawn} from 'node:child_process';
+const scripts={api:'src/server.mjs',gateway:'scripts/start-funnel-gateway.mjs'};
+const script=scripts[process.argv[2]];
+if(!script||process.argv.length!==3)throw Error('Usage: npm run funnel:service -- api|gateway');
+const config=JSON.parse(fs.readFileSync(path.resolve('.local/funnel/environment.json'),'utf8'));
+const child=spawn(process.execPath,[script],{stdio:'inherit',env:{...process.env,...config}});
+child.on('error',()=>{console.error('Could not start Funnel service');process.exitCode=1;});
+child.on('exit',code=>process.exitCode=code??1);
+for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>child.kill(signal));

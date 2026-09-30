@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {randomBytes} from 'node:crypto';
+import {validateOrigin} from '../src/config.mjs';
+import {trustedKeys} from '../src/portable.mjs';
+const [origin,...extra]=process.argv.slice(2);
+if(!origin||extra.length)throw Error('Usage: npm run funnel:configure -- https://DEVICE.TAILNET.ts.net');
+const url=validateOrigin(origin);
+if(url.protocol!=='https:'||!url.hostname.endsWith('.ts.net')||url.port)throw Error('Use the Tailscale device HTTPS URL on port 443');
+if(!process.env.INBOX_TRUST_FILE||!trustedKeys().length)throw Error('Set INBOX_TRUST_FILE to the operator-provided trust file first');
+const dir=path.resolve('.local/funnel');fs.mkdirSync(dir,{recursive:true,mode:0o700});
+const config={INBOX_TRUST_FILE:path.resolve(process.env.INBOX_TRUST_FILE),PUBLIC_ORIGIN:origin,DATA_DIR:dir,ENROLLMENT_TOKEN:randomBytes(32).toString('hex'),PORT:'4310',FUNNEL_PORT:'4311'};
+const file=path.join(dir,'environment.json');
+fs.writeFileSync(file,JSON.stringify(config,null,2)+'\n',{mode:0o600,flag:'wx'});
+console.log(`Saved private configuration to ${file}. Existing configurations are never overwritten.`);
+console.log('Next: run npm run funnel:service -- api and gateway in separate terminals. The inbox needs no online verifier.');
+console.log('Connect your own Tailscale account, inspect existing Funnel settings, then publish 127.0.0.1:4311.');

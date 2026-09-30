@@ -1,0 +1,4 @@
+// Pinned from X web client main.941731a8bedadd89a.js; verified with cookie capture + TLSNotary.
+export const X_HOST="x.com";
+export const X_PATH="/i/api/graphql/9t128XgFic52jPUEkJMf6w/Viewer?variables=%7B%22withCommunitiesMemberships%22%3Afalse%7D&features=%7B%22subscriptions_upsells_api_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Afalse%2C%22responsive_web_profile_redirect_enabled%22%3Afalse%2C%22rweb_tipjar_consumption_enabled%22%3Afalse%2C%22verified_phone_label_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Afalse%7D&fieldToggles=%7B%22isDelegate%22%3Afalse%2C%22withPayments%22%3Afalse%2C%22withAuxiliaryUserLabels%22%3Afalse%7D";
+export const X_URL="https://"+X_HOST+X_PATH;
